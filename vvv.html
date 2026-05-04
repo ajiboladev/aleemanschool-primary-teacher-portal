@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=no, viewport-fit=cover" />
+  <title>Aleeman Primary School Portal</title>
+  <link rel="icon" type="image/x-icon" href="aleeman-logo.png" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1a237e" />
+  <link rel="apple-touch-icon" sizes="180x180" href="aleeman-logo.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Aleeman Primary" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Aleeman Primary School Portal" />
+  <meta property="og:description" content="Aleeman Primary School — Admin, Teacher and Student Portals." />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --p1:#1a237e; --p2:#283593; --p3:#3949ab; --p4:#5c6bc0; --p5:#e8eaf6;
+      --text:#111827; --muted:#4b5563; --white:#fff;
+    }
+    * { -webkit-user-select:none; -ms-user-select:none; user-select:none; }
+    html, body { height:100%; }
+    body {
+      font-family:'DM Sans',system-ui,sans-serif;
+      background:var(--p1);
+      color:var(--white);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+    h1,h2,h3 { font-family:'Outfit',sans-serif; }
+
+    /* ── Background pattern ── */
+    body::before {
+      content:'';
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(92,107,192,.35) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(26,35,126,.5) 0%, transparent 60%);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    /* ── Header ── */
+    .header {
+      position:relative; z-index:1;
+      text-align:center;
+      padding:3rem 1.5rem 2rem;
+    }
+    .school-emblem {
+      width:80px; height:80px; border-radius:50%;
+      background:rgba(255,255,255,.12);
+      border:3px solid rgba(255,255,255,.25);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-size:2.5rem; margin-bottom:1.25rem;
+      box-shadow:0 8px 32px rgba(0,0,0,.2);
+    }
+    .header h1 {
+      font-size:clamp(1.3rem,4vw,1.9rem);
+      font-weight:900;
+      letter-spacing:.02em;
+      line-height:1.2;
+    }
+    .header p {
+      font-size:.85rem;
+      opacity:.7;
+      margin-top:.5rem;
+    }
+    .session-tag {
+      display:inline-block;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:20px;
+      padding:.3rem .9rem;
+      font-size:.75rem;
+      font-weight:600;
+      margin-top:.9rem;
+      letter-spacing:.03em;
+    }
+
+    /* ── Portal cards ── */
+    .portals {
+      position:relative; z-index:1;
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 1.25rem 2.5rem;
+    }
+    .portal-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:1.1rem;
+      width:100%;
+      max-width:860px;
+    }
+
+    .portal-card {
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:18px;
+      padding:2rem 1.5rem 1.75rem;
+      text-decoration:none;
+      color:var(--white);
+      transition:transform .2s, background .2s, border-color .2s, box-shadow .2s;
+      display:flex;
+      flex-direction:column;
+      gap:.75rem;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      position:relative;
+      overflow:hidden;
+    }
+    .portal-card::before {
+      content:'';
+      position:absolute;
+      top:-40px; right:-40px;
+      width:130px; height:130px;
+      border-radius:50%;
+      background:rgba(255,255,255,.05);
+      pointer-events:none;
+    }
+    .portal-card:hover {
+      transform:translateY(-4px);
+      background:rgba(255,255,255,.14);
+      border-color:rgba(255,255,255,.3);
+      box-shadow:0 16px 48px rgba(0,0,0,.25);
+    }
+    .portal-card:active { transform:translateY(-1px); }
+
+    .card-icon {
+      font-size:2.2rem;
+      width:56px; height:56px;
+      background:rgba(255,255,255,.12);
+      border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      flex-shrink:0;
+    }
+    .card-title {
+      font-size:1.15rem;
+      font-weight:800;
+      font-family:'Outfit',sans-serif;
+    }
+    .card-desc {
+      font-size:.82rem;
+      opacity:.7;
+      line-height:1.5;
+      flex:1;
+    }
+    .card-cta {
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      font-size:.8rem;
+      font-weight:700;
+      background:rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.2);
+      border-radius:8px;
+      padding:.4rem .9rem;
+      margin-top:.25rem;
+      width:fit-content;
+      transition:background .15s;
+    }
+    .portal-card:hover .card-cta { background:rgba(255,255,255,.22); }
+
+    /* Card accent lines */
+    .portal-card.admin  { border-top:3px solid #5c6bc0; }
+    .portal-card.teacher{ border-top:3px solid #42a5f5; }
+    .portal-card.student{ border-top:3px solid #66bb6a; }
+
+    /* ── Footer ── */
+    .footer {
+      position:relative; z-index:1;
+      text-align:center;
+      padding:1.25rem;
+      border-top:1px solid rgba(255,255,255,.08);
+      font-size:.74rem;
+      opacity:.45;
+    }
+
+    /* ── Responsive ── */
+    @media(max-width:520px) {
+      .header { padding:2rem 1.25rem 1.5rem; }
+      .portal-grid { grid-template-columns:1fr; max-width:380px; }
+      .portals { padding-bottom:2rem; }
+    }
+
+    /* ── Fade-in animation ── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+    .portal-card { animation:fadeUp .4s ease both; }
+    .portal-card:nth-child(1) { animation-delay:.05s; }
+    .portal-card:nth-child(2) { animation-delay:.12s; }
+    .portal-card:nth-child(3) { animation-delay:.19s; }
+    .header { animation:fadeUp .3s ease both; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="school-emblem">🏫</div>
+  <h1>Aleeman Primary School</h1>
+  <p>School Management Portal</p>
+  <div class="session-tag" id="session-tag">Loading session…</div>
+</div>
+
+<div class="portals">
+  <div class="portal-grid">
+
+    <a class="portal-card admin" href="admin.html">
+      <div class="card-icon">🛡️</div>
+      <div class="card-title">Admin Portal</div>
+      <div class="card-desc">Manage teachers, students, classes, subjects, sessions, and view all results.</div>
+      <div class="card-cta">Open Admin Portal →</div>
+    </a>
+
+    <a class="portal-card teacher" href="teacher.html">
+      <div class="card-icon">👨‍🏫</div>
+      <div class="card-title">Teacher Portal</div>
+      <div class="card-desc">Enter and edit student scores and remarks for your assigned class and term.</div>
+      <div class="card-cta">Open Teacher Portal →</div>
+    </a>
+
+    <a class="portal-card student" href="student.html">
+      <div class="card-icon">🎓</div>
+      <div class="card-title">Student Result</div>
+      <div class="card-desc">Check your result using your Student Number, PIN, class, term, and session.</div>
+      <div class="card-cta">Check My Result →</div>
+    </a>
+
+  </div>
+</div>
+
+<div class="footer">
+  &copy; <span id="yr"></span> Aleeman Primary School · All rights reserved
+</div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const FB_CONFIG = {
+  apiKey:"AIzaSyAVD2x5XR55f_6GUBCNcfUcbT0LiTiw8VU",
+  authDomain:"aleeman-primary.firebaseapp.com",
+  projectId:"aleeman-primary",
+  storageBucket:"aleeman-primary.firebasestorage.app",
+  messagingSenderId:"120804301463",
+  appId:"1:120804301463:web:d1a84b22edd67bd36e67d2"
+};
+const app = getApps().length ? getApp() : initializeApp(FB_CONFIG);
+const db  = getFirestore(app);
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* Load current session from Firestore to display on index */
+try {
+  const snap = await getDoc(doc(db,'settings','session'));
+  const tag  = document.getElementById('session-tag');
+  if (snap.exists()) {
+    const d = snap.data();
+    const s = d.activeSession||'', t = d.activeTerm||'';
+    tag.textContent = (t&&s) ? `${t}  ·  ${s}` : (s || 'Session not set');
+  } else {
+    tag.textContent = 'Session not configured';
+  }
+} catch {
+  document.getElementById('session-tag').textContent = 'Aleeman Primary School';
+}
+</script>
+</body>
+</html>
