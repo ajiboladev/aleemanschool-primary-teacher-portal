@@ -7,85 +7,33 @@
   <link rel="icon" type="image/x-icon" href="aleeman-logo.png" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
+  <script>window.FLOATING_TEXT = 'Proudly 2025/2026';</script>
+  <script src="floating.js"></script>
 
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#008000" />
+  <script src="pwa-install.js" defer></script>
 
+  <link rel="icon" type="image/x-icon" href="aleeman-logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="aleeman-logo.png" />
 
+  <meta name="application-name" content="Aleeman School" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Aleeman School" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#008000" media="(prefers-color-scheme: dark)" />
 
-    <script>window.FLOATING_TEXT = 'Proudly 2025/2026';</script>
-<script src="floating.js"></script>
+  <link rel="manifest" href="manifest.json" />
 
-
-
-
-
-
- <link rel="manifest" href="manifest.json" />
-    <meta name="theme-color" content="#008000" />
-    <script src="pwa-install.js" defer></script>
-
-
-    <link rel="icon" type="image/x-icon" href="aleeman-logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="aleeman-logo.png" />
-
-    <!-- ④ PWA meta -->
-    <meta name="application-name" content="Aleeman School" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Aleeman School" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta
-      name="theme-color"
-      content="#008000"
-      media="(prefers-color-scheme: dark)"
-    />
-
-
-
-
-    <!-- ⑥ Manifest -->
-    <link rel="manifest" href="manifest.json" />
-
-    <!-- ⑦ Open Graph — used by WhatsApp, Facebook, Discord, iMessage previews -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://aleemanschool-teacher-portal.vercel.app/" />
-    <meta property="og:site_name" content="Aleeman" />
-    <meta
-      property="og:title"
-      content="Teacher Portal — Aleeman Primary School"
-    />
-    <meta
-      property="og:description"
-      content="Aleeman School — Teacher Portal. Manage classroom resources, track student progress, and communicate with parents."
-    />
-    <meta
-      property="og:image"
-      content="https://aleemanschool-teacher-portal.vercel.app/aleeman-logo.png"
-    />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aleemanschool-teacher-portal.vercel.app/" />
+  <meta property="og:site_name" content="Aleeman" />
+  <meta property="og:title" content="Teacher Portal — Aleeman Primary School" />
+  <meta property="og:description" content="Aleeman School — Teacher Portal. Manage classroom resources, track student progress, and communicate with parents." />
+  <meta property="og:image" content="https://aleemanschool-teacher-portal.vercel.app/aleeman-logo.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -97,13 +45,7 @@
       --text:#1a1f2e; --muted:#5a6a7c; --border:#c5cae9; --bg:#f0f2ff; --white:#fff;
       --shadow:0 2px 14px rgba(26,35,126,.1);
     }
-    * {
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  box-sizing: border-box;
-}
-    * { -webkit-user-select:none; -ms-user-select:none; user-select:none; }
+    * { -webkit-user-select:none; -ms-user-select:none; user-select:none; box-sizing:border-box; }
     body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); }
     h1,h2,h3,h4 { font-family:'Outfit',sans-serif; }
 
@@ -337,7 +279,7 @@
       <button class="modal-close" id="close-modal">✕</button>
     </div>
     <div class="modal-body">
-      <div class="lock-legend">🔒 Each subject requires its password to unlock. Click the lock button, enter the password, and press ✓.</div>
+      <div class="lock-legend">🔒 Each subject requires its password to unlock. Click the lock button, enter the password, and press ✓. <strong>To remove a subject's scores</strong>, unlock it and clear all its inputs, then save.</div>
       <div class="score-wrap">
         <table class="score-table">
           <thead id="score-thead"></thead>
@@ -464,7 +406,6 @@ async function loadConfig(){
     ]);
     if(sessSnap.exists()){const d=sessSnap.data();if(d.activeSession){adminSession=$('sel-session').value=d.activeSession;$('session-auto-badge').style.display='inline';}if(d.activeTerm){adminTerm=d.activeTerm;$('sel-term').value=d.activeTerm;$('term-auto-badge').style.display='inline';}}
     testsConfig=(assessSnap.exists()&&assessSnap.data().tests?.length)?assessSnap.data().tests:[...DEFAULT_TESTS];
-    // Load classes
     if(classesSnap.exists()){
       const d=classesSnap.data();
       allClasses=[...(d.prePrimary||DEFAULT_PREPRIMARY_CLASSES),...(d.primary||['Primary 1','Primary 2','Primary 3','Primary 4','Primary 5'])];
@@ -481,13 +422,11 @@ function populateClassSelect(){
   sel.innerHTML='<option value="">Choose class…</option>'+allClasses.map(c=>`<option>${esc(c)}</option>`).join('');
 }
 
-// Determine subject group from class name
 function isPrePrimary(cls){const l=cls.toLowerCase();return l.startsWith('prep')||l.startsWith('nursery');}
 function getSubjects(cls){if(!teacherSubjects)return DEFAULT_PRIMARY;return isPrePrimary(cls)?teacherSubjects.prePrimary:teacherSubjects.primary;}
 function getPasswords(cls){const key=isPrePrimary(cls)?'prePrimary':'primary';return subjectPasswords[key]||{};}
 function getRemarkPassword(cls){return remarkPasswords[cls]||'';}
 
-// Login
 let _loginAttempts=0,_loginLocked=false,_lockTimer=null;
 async function doLogin(){
   if(_loginLocked){$('rate-warn')?.classList.add('show');return;}
@@ -510,7 +449,6 @@ $('login-btn').addEventListener('click',doLogin);
 ['l-email','l-pass'].forEach(id=>$(id).addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();}));
 $('logout-btn').addEventListener('click',async()=>{try{await signOut(auth);toast('Signed out.','info');}catch{toast('Sign out failed.','error');}});
 
-/* ── Load Students ── */
 $('load-btn').addEventListener('click',async()=>{
   clearSessionErr();
   selClass=$('sel-class').value;selTerm=$('sel-term').value;selSession=$('sel-session').value.trim();
@@ -553,7 +491,6 @@ function renderStudents(){
   }).join('');
 }
 
-/* ── Score Modal ── */
 window._openScoreModal=studentId=>{
   currentStudent=currentStudents.find(s=>s.id===studentId);
   if(!currentStudent)return;
@@ -629,7 +566,7 @@ function _doUnlock(si,subjectName){
   if(btn){btn.textContent='🔓 Unlocked';btn.classList.add('unlocked');btn.disabled=true;}
   if(form)form.classList.remove('show');
   window._recalcRow(si);updateModalSummary(getSubjects(selClass).length);
-  toast(`"${subjectName}" unlocked`,'success',1800);
+  toast(`"${subjectName}" unlocked — enter scores (or clear all to remove)`,'success',2000);
 }
 
 window._recalcRow=si=>{
@@ -648,7 +585,7 @@ function updateModalSummary(subjectCount){
   const subjects=getSubjects(selClass);let filled=0,totalScore=0,count=0;
   subjects.forEach((_,si)=>{if(!unlockedSubjects.has(si))return;const tot=document.getElementById(`tot_${si}`)?.textContent;if(tot&&tot!=='—'&&tot!==''){filled++;totalScore+=Number(tot);count++;}});
   const avg=count>0?(totalScore/count).toFixed(1)+'%':'—';
-  $('modal-summary').innerHTML=`<span>Unlocked: <strong>${unlockedSubjects.size}/${subjectCount}</strong></span><span>Filled: <strong>${filled}</strong></span><span>Running Avg: <strong>${avg}</strong></span><span style="font-size:.74rem;opacity:.7">Only unlocked subjects will be saved</span>`;
+  $('modal-summary').innerHTML=`<span>Unlocked: <strong>${unlockedSubjects.size}/${subjectCount}</strong></span><span>Filled: <strong>${filled}</strong></span><span>Running Avg: <strong>${avg}</strong></span><span style="font-size:.74rem;opacity:.7">Locked subjects stay as-is. Cleared subjects will be removed.</span>`;
 }
 
 function getGrade(total){
@@ -665,52 +602,125 @@ function _doUnlockRemarks(){
   toast('Remarks unlocked','success',1800);
 }
 
-/* ── Merge subjects intelligently (preserves existing + adds/updates new) ── */
-function mergeSubjects(existingSubjects,newSubjects){
-  if(!existingSubjects||!Array.isArray(existingSubjects))existingSubjects=[];
-  if(!newSubjects||!Array.isArray(newSubjects))return existingSubjects;
-  const subjectMap={};
-  existingSubjects.forEach(subj=>{if(subj&&subj.name)subjectMap[subj.name]={...subj};});
-  newSubjects.forEach(newSubj=>{if(newSubj&&newSubj.name)subjectMap[newSubj.name]={...newSubj};});
+/* ── Subject merge with removal support ── */
+// • existingSubjects : subjects already in Firestore for this student/term
+// • subjectsToSave   : unlocked subjects with valid complete scores → add/update
+// • subjectsToRemove : unlocked subjects where teacher cleared ALL inputs → delete
+function mergeSubjectsWithRemovals(existingSubjects, subjectsToSave, subjectsToRemove) {
+  const subjectMap = {};
+  // Seed with everything currently in the DB
+  (existingSubjects || []).forEach(subj => {
+    if (subj && subj.name) subjectMap[subj.name] = { ...subj };
+  });
+  // Add or overwrite with freshly entered scores
+  (subjectsToSave || []).forEach(subj => {
+    if (subj && subj.name) subjectMap[subj.name] = { ...subj };
+  });
+  // Delete subjects that were explicitly cleared by the teacher
+  (subjectsToRemove || []).forEach(name => { delete subjectMap[name]; });
   return Object.values(subjectMap);
 }
 
-/* ── Save Result ── */
+/* ── Save Result (writeBatch for atomicity) ── */
 $('save-btn').addEventListener('click',async()=>{
   if(!currentStudent)return;
-  const subjects=getSubjects(selClass);const btn=$('save-btn');const subjectData=[];let totalScore=0,anyError=false;
+  const subjects=getSubjects(selClass);const btn=$('save-btn');
+  let anyError=false;
+  const subjectsToSave   = []; // unlocked + complete valid scores
+  const subjectsToRemove = []; // unlocked + all inputs cleared → delete from DB
+
   subjects.forEach((subj,si)=>{
-    if(!unlockedSubjects.has(si))return;
+    if(!unlockedSubjects.has(si))return; // not touched → keep DB data as-is
+
+    const exInp=document.getElementById(`ex_${si}`);
+    const exV=exInp?.value.trim()??'';
+
+    // Check if EVERY input for this subject is blank
+    const testValues=testsConfig.map((_,ti)=>{
+      const inp=document.getElementById(`t_${si}_${ti}`);
+      return inp?.value.trim()??'';
+    });
+    const allBlank=exV===''&&testValues.every(v=>v==='');
+
+    if(allBlank){
+      // Teacher wiped all scores → mark for removal from Firestore
+      subjectsToRemove.push(subj);
+      return;
+    }
+
+    // Validate individual test scores
     const tests=[];let caTotal=0,caComplete=true;
-    testsConfig.forEach((t,ti)=>{const inp=document.getElementById(`t_${si}_${ti}`);const v=inp?.value.trim()??'';if(v===''){caComplete=false;return;}const n=Number(v);if(isNaN(n)||n<0||n>t.max){inp?.classList.add('invalid');anyError=true;caComplete=false;return;}inp?.classList.remove('invalid');tests.push({id:t.id,name:t.name,score:n,max:t.max});caTotal+=n;});
-    const exInp=document.getElementById(`ex_${si}`);const exV=exInp?.value.trim()??'';if(exV==='')return;
-    const exam=Number(exV);if(isNaN(exam)||exam<0||exam>70){exInp?.classList.add('invalid');anyError=true;return;}exInp?.classList.remove('invalid');
+    testsConfig.forEach((t,ti)=>{
+      const inp=document.getElementById(`t_${si}_${ti}`);const v=inp?.value.trim()??'';
+      if(v===''){caComplete=false;return;}
+      const n=Number(v);
+      if(isNaN(n)||n<0||n>t.max){inp?.classList.add('invalid');anyError=true;caComplete=false;return;}
+      inp?.classList.remove('invalid');
+      tests.push({id:t.id,name:t.name,score:n,max:t.max});caTotal+=n;
+    });
+
+    // Exam field empty while other data exists → validation error
+    if(exV===''){exInp?.classList.add('invalid');anyError=true;return;}
+    const exam=Number(exV);
+    if(isNaN(exam)||exam<0||exam>70){exInp?.classList.add('invalid');anyError=true;return;}
+    exInp?.classList.remove('invalid');
     if(!caComplete){anyError=true;return;}
-    const total=caTotal+exam;const{g,r}=getGrade(total);totalScore+=total;
-    subjectData.push({name:subj,tests,caTotal,exam,total,grade:g,remark:r});
+
+    const total=caTotal+exam;const{g,r}=getGrade(total);
+    subjectsToSave.push({name:subj,tests,caTotal,exam,total,grade:g,remark:r});
   });
+
   if(anyError){toast('Fix invalid scores before saving.','error');return;}
-  if(!subjectData.length){toast('Unlock at least one subject and enter complete scores.','error');return;}
-  const average=parseFloat((totalScore/subjectData.length).toFixed(2));
-  const docId=resultDocId(currentStudent.number,selClass,selTerm,selSession);
+
+  // Allow saving if there's anything to add/update OR anything to remove
+  const hasChanges=subjectsToSave.length>0||subjectsToRemove.length>0;
+  if(!hasChanges){
+    toast('No changes to save. Unlock a subject, then enter or clear its scores.','error');
+    return;
+  }
+
   setBtn(btn,true);
   try{
-    const batch=writeBatch(db);
     const existingResult=savedResults[currentStudent.number]||{};
     const remarksUnlocked=document.getElementById('unlock-remarks-btn')?.classList.contains('unlocked');
     const teacherRemarkToSave=remarksUnlocked?(document.getElementById('teacher-remark')?.value||'').trim():(existingResult.teacherRemark||'');
     const principalRemarkToSave=remarksUnlocked?(document.getElementById('principal-remark')?.value||'').trim():(existingResult.principalRemark||'');
-    // Merge subjects: keep existing subjects, update/add new ones
-    const mergedSubjects=mergeSubjects(existingResult.subjects,subjectData);
-    // Recalculate totals based on merged subjects
+
+    // Final subject list:
+    //   keep all untouched existing subjects
+    //   add/update subjects with new scores
+    //   remove subjects that were explicitly cleared
+    const mergedSubjects=mergeSubjectsWithRemovals(
+      existingResult.subjects,
+      subjectsToSave,
+      subjectsToRemove
+    );
+
+    // Recalculate aggregates from the final merged list
     let totalScoreMerged=0;
     mergedSubjects.forEach(s=>{totalScoreMerged+=(s.total||0);});
     const averageMerged=mergedSubjects.length>0?parseFloat((totalScoreMerged/mergedSubjects.length).toFixed(2)):0;
-    const payload={studentNumber:currentStudent.number,studentName:currentStudent.name,class:selClass,term:selTerm,session:selSession,gender:currentStudent.gender||'',subjects:mergedSubjects,totalScore:totalScoreMerged,average:averageMerged,assessmentConfig:{tests:testsConfig},teacherRemark:teacherRemarkToSave,principalRemark:principalRemarkToSave,submittedBy:currentTeacher.name||currentTeacher.email,teacherUid:currentTeacher.uid,submittedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+
+    const docId=resultDocId(currentStudent.number,selClass,selTerm,selSession);
+    const batch=writeBatch(db);
+    const payload={
+      studentNumber:currentStudent.number,studentName:currentStudent.name,
+      class:selClass,term:selTerm,session:selSession,gender:currentStudent.gender||'',
+      subjects:mergedSubjects,totalScore:totalScoreMerged,average:averageMerged,
+      assessmentConfig:{tests:testsConfig},
+      teacherRemark:teacherRemarkToSave,principalRemark:principalRemarkToSave,
+      submittedBy:currentTeacher.name||currentTeacher.email,
+      teacherUid:currentTeacher.uid,
+      submittedAt:serverTimestamp(),updatedAt:serverTimestamp(),
+    };
     batch.set(doc(db,'results',docId),payload,{merge:true});
     await batch.commit();
+
     savedResults[currentStudent.number]={...payload,submittedAt:new Date(),updatedAt:new Date()};
-    renderStudents();toast(`Result saved for ${currentStudent.name}!`);closeModal();
+    renderStudents();
+    const removedMsg=subjectsToRemove.length>0?` (${subjectsToRemove.length} subject(s) removed)`:'';
+    toast(`Result saved for ${currentStudent.name}!${removedMsg}`);
+    closeModal();
   }catch(err){console.error(err);toast('Failed to save: '+err.message,'error');}finally{setBtn(btn,false);}
 });
 
