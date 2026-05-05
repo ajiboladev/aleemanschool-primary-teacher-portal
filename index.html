@@ -665,6 +665,16 @@ function _doUnlockRemarks(){
   toast('Remarks unlocked','success',1800);
 }
 
+/* ── Merge subjects intelligently (preserves existing + adds/updates new) ── */
+function mergeSubjects(existingSubjects,newSubjects){
+  if(!existingSubjects||!Array.isArray(existingSubjects))existingSubjects=[];
+  if(!newSubjects||!Array.isArray(newSubjects))return existingSubjects;
+  const subjectMap={};
+  existingSubjects.forEach(subj=>{if(subj&&subj.name)subjectMap[subj.name]={...subj};});
+  newSubjects.forEach(newSubj=>{if(newSubj&&newSubj.name)subjectMap[newSubj.name]={...newSubj};});
+  return Object.values(subjectMap);
+}
+
 /* ── Save Result ── */
 $('save-btn').addEventListener('click',async()=>{
   if(!currentStudent)return;
@@ -690,7 +700,13 @@ $('save-btn').addEventListener('click',async()=>{
     const remarksUnlocked=document.getElementById('unlock-remarks-btn')?.classList.contains('unlocked');
     const teacherRemarkToSave=remarksUnlocked?(document.getElementById('teacher-remark')?.value||'').trim():(existingResult.teacherRemark||'');
     const principalRemarkToSave=remarksUnlocked?(document.getElementById('principal-remark')?.value||'').trim():(existingResult.principalRemark||'');
-    const payload={studentNumber:currentStudent.number,studentName:currentStudent.name,class:selClass,term:selTerm,session:selSession,gender:currentStudent.gender||'',subjects:subjectData,totalScore,average,assessmentConfig:{tests:testsConfig},teacherRemark:teacherRemarkToSave,principalRemark:principalRemarkToSave,submittedBy:currentTeacher.name||currentTeacher.email,teacherUid:currentTeacher.uid,submittedAt:serverTimestamp(),updatedAt:serverTimestamp()};
+    // Merge subjects: keep existing subjects, update/add new ones
+    const mergedSubjects=mergeSubjects(existingResult.subjects,subjectData);
+    // Recalculate totals based on merged subjects
+    let totalScoreMerged=0;
+    mergedSubjects.forEach(s=>{totalScoreMerged+=(s.total||0);});
+    const averageMerged=mergedSubjects.length>0?parseFloat((totalScoreMerged/mergedSubjects.length).toFixed(2)):0;
+    const payload={studentNumber:currentStudent.number,studentName:currentStudent.name,class:selClass,term:selTerm,session:selSession,gender:currentStudent.gender||'',subjects:mergedSubjects,totalScore:totalScoreMerged,average:averageMerged,assessmentConfig:{tests:testsConfig},teacherRemark:teacherRemarkToSave,principalRemark:principalRemarkToSave,submittedBy:currentTeacher.name||currentTeacher.email,teacherUid:currentTeacher.uid,submittedAt:serverTimestamp(),updatedAt:serverTimestamp()};
     batch.set(doc(db,'results',docId),payload,{merge:true});
     await batch.commit();
     savedResults[currentStudent.number]={...payload,submittedAt:new Date(),updatedAt:new Date()};
