@@ -422,7 +422,16 @@ function populateClassSelect(){
   sel.innerHTML='<option value="">Choose class…</option>'+allClasses.map(c=>`<option>${esc(c)}</option>`).join('');
 }
 
-function isPrePrimary(cls){const l=cls.toLowerCase();return l.startsWith('prep')||l.startsWith('nursery');}
+
+// function isPrePrimary(cls){const l=cls.toLowerCase();return l.startsWith('prep')||l.startsWith('nursery');}
+
+function isPrePrimary(cls){
+  const l=cls.toLowerCase().trim();
+  // Nursery 2 shares subjects with Primary 1–5
+  if(l==='nursery 2'||l==='nursery2') return false;
+  return l.startsWith('prep')||l.startsWith('nursery');
+}
+
 function getSubjects(cls){if(!teacherSubjects)return DEFAULT_PRIMARY;return isPrePrimary(cls)?teacherSubjects.prePrimary:teacherSubjects.primary;}
 function getPasswords(cls){const key=isPrePrimary(cls)?'prePrimary':'primary';return subjectPasswords[key]||{};}
 function getRemarkPassword(cls){return remarkPasswords[cls]||'';}
