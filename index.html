@@ -183,14 +183,14 @@
 <body>
 
 <div id="auth-loading">
-  <div class="al-icon">👨‍🏫</div>
+  <div class="al-icon"><i class="fa-chalkboard"></i></div>
   <div class="al-spinner"></div>
   <p>Verifying session…</p>
 </div>
 
 <div id="login-page">
   <div class="login-box">
-    <div class="lgo">👨‍🏫</div>
+    <div class="lgo"><i class="fa-chalkboard"></i></div>
     <h1>Teacher Login</h1>
     <p class="sub">Aleeman Primary School</p>
     <div class="fg"><label>Email Address</label><input type="email" id="l-email" placeholder="teacher@aleeman.edu.ng" autocomplete="email" /></div>
@@ -198,10 +198,10 @@
       <label>Password</label>
       <div class="pw-wrap">
         <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" />
-        <button class="pw-eye" type="button" id="login-pw-eye" title="Show/hide">👁️</button>
+        <button class="pw-eye" type="button" id="login-pw-eye" title="Show/hide"><i class="fa-eye"></i></button>
       </div>
     </div>
-    <div class="rate-warn" id="rate-warn">⚠️ Too many failed attempts. Wait <span id="rate-timer">30</span>s.</div>
+    <div class="rate-warn" id="rate-warn"><i class="fa-exclamation-triangle"></i> Too many failed attempts. Wait <span id="rate-timer">30</span>s.</div>
     <button class="btn btn-primary btn-full" id="login-btn">Sign In</button>
     <div class="err" id="login-err"></div>
   </div>
@@ -210,7 +210,7 @@
 <div id="dashboard-page">
   <div class="topbar">
     <div class="topbar-l">
-      <span class="ico">👨‍🏫</span>
+      <span class="ico"><i class="fa-chalkboard"></i></span>
       <div class="topbar-info">
         <h2>Teacher Portal</h2>
         <p>Aleeman Primary School</p>
@@ -224,7 +224,7 @@
 
   <div class="content">
     <div class="filter-card">
-      <h3>📂 Select Class &amp; Session</h3>
+      <h3><i class="fa-chalkboard"></i> Select Class &amp; Session</h3>
       <div class="filter-grid">
         <div class="fg" style="margin:0">
           <label>Class</label>
@@ -260,7 +260,7 @@
           </div>
         </div>
         <div style="padding:.75rem 1.25rem">
-          <div class="info-note">📝 Click <strong>Enter Result</strong> to record scores. Each subject must be unlocked with its password before scores can be entered.</div>
+          <div class="info-note"><i class="fa-info-circle"></i> Click <strong>Enter Result</strong> to record scores. Each subject must be unlocked with its password before scores can be entered.</div>
         </div>
         <table>
           <thead><tr><th>#</th><th>Student Name</th><th>Number</th><th>Gender</th><th>Status</th><th>Avg / 100</th><th>Action</th></tr></thead>
@@ -279,7 +279,7 @@
       <button class="modal-close" id="close-modal">✕</button>
     </div>
     <div class="modal-body">
-      <div class="lock-legend">🔒 Each subject requires its password to unlock. Click the lock button, enter the password, and press ✓. <strong>To remove a subject's scores</strong>, unlock it and clear all its inputs, then save.</div>
+      <div class="lock-legend"><i class="fa-lock"></i> Each subject requires its password to unlock. Click the lock button, enter the password, and press ✓. <strong>To remove a subject's scores</strong>, unlock it and clear all its inputs, then save.</div>
       <div class="score-wrap">
         <table class="score-table">
           <thead id="score-thead"></thead>
@@ -287,7 +287,7 @@
         </table>
       </div>
       <div id="remarks-wrap" style="margin-top:1rem">
-        <div class="info-note">🗒️ To add or edit remarks, unlock with the class remark password.</div>
+        <div class="info-note"><i class="fa-info-circle"></i> To add or edit remarks, unlock with the class remark password.</div>
         <div style="display:flex;gap:.6rem;align-items:flex-start;flex-wrap:wrap">
           <div style="flex:1">
             <label style="font-weight:700;font-size:.82rem">Teacher's Remark</label>
@@ -301,7 +301,7 @@
             <label style="font-weight:700;font-size:.82rem">Unlock Remarks</label>
             <div style="display:flex;gap:.4rem;margin-top:.4rem">
               <input id="unlock-remarks-inp" type="password" placeholder="Class remark password" style="flex:1;padding:.48rem .6rem;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:.86rem;" />
-              <button class="btn btn-ghost btn-sm" id="unlock-remarks-btn" type="button">🔒 Unlock</button>
+              <button class="btn btn-ghost btn-sm" id="unlock-remarks-btn" type="button"><i class="fa-unlock"></i> Unlock</button>
             </div>
           </div>
         </div>
@@ -310,7 +310,7 @@
     <div class="modal-ftr">
       <div class="modal-summary" id="modal-summary"></div>
       <button class="btn btn-ghost btn-sm" id="close-modal-2">Cancel</button>
-      <button class="btn btn-green btn-sm" id="save-btn">💾 Save Result</button>
+      <button class="btn btn-green btn-sm" id="save-btn"><i class="fa-save"></i> Save Result</button>
     </div>
   </div>
 </div>
