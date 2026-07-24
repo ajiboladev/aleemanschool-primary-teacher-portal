@@ -481,7 +481,7 @@ $('load-btn').addEventListener('click',async()=>{
     $('session-sub').textContent=`Academic Session: ${selSession}`;
     $('s-count').textContent=`${currentStudents.length} student${currentStudents.length!==1?'s':''}`;
     const caMax=testsConfig.reduce((s,t)=>s+Number(t.max||0),0);
-    $('assess-summary').textContent=`Tests: ${testsConfig.map(t=>`${t.name}(${t.max})`).join(', ')} | CA: ${caMax} | Exam: 70`;
+    $('assess-summary').textContent=`Tests: ${testsConfig.map(t=>`${t.name}(${t.max})`).join(', ')} | CA: ${caMax} | Exam: 60`;
   }catch(err){console.error(err);toast('Failed to load students: '+err.message,'error');$('students-card').style.display='none';}
   finally{setBtn(btn,false);}
 });
@@ -515,7 +515,7 @@ window._openScoreModal=studentId=>{
   if(existing?.subjects)existing.subjects.forEach(s=>{existingMap[s.name]=s;});
   const testHeaders=testsConfig.map(t=>`<th title="Max: ${t.max}">${esc(t.name)}<br><span style="font-weight:400;opacity:.7">(0–${t.max})</span></th>`).join('');
   const caMax=testsConfig.reduce((s,t)=>s+Number(t.max||0),0);
-  $('score-thead').innerHTML=`<tr><th style="min-width:180px">Subject</th>${testHeaders}<th>CA<br><span style="font-weight:400;opacity:.7">(${caMax})</span></th><th>Exam<br><span style="font-weight:400;opacity:.7">(0–70)</span></th><th>Total</th><th>Grade</th></tr>`;
+  $('score-thead').innerHTML=`<tr><th style="min-width:180px">Subject</th>${testHeaders}<th>CA<br><span style="font-weight:400;opacity:.7">(${caMax})</span></th><th>Exam<br><span style="font-weight:400;opacity:.7">(0–60)</span></th><th>Total</th><th>Grade</th></tr>`;
   $('score-tbody').innerHTML=subjects.map((subj,si)=>{
     const ex=existingMap[subj];
     const hasPass=!!passwords[subj];
@@ -546,7 +546,7 @@ window._openScoreModal=studentId=>{
       </td>
       ${testInputs}
       <td><span class="ca-total" id="ca_${si}">—</span></td>
-      <td><input class="score-input" type="number" min="0" max="70" id="ex_${si}" value="${exVal}" disabled oninput="window._recalcRow(${si})"/></td>
+      <td><input class="score-input" type="number" min="0" max="60" id="ex_${si}" value="${exVal}" disabled oninput="window._recalcRow(${si})"/></td>
       <td><strong class="grand-total" id="tot_${si}">${tot!==''?tot:'—'}</strong></td>
       <td><span class="grade-pill ${gr?gr.cls:''}" id="gr_${si}">${gr?gr.g:'—'}</span></td>
     </tr>`;
@@ -587,7 +587,7 @@ window._recalcRow=si=>{
   const caEl=document.getElementById(`ca_${si}`);const exInp=document.getElementById(`ex_${si}`);const totEl=document.getElementById(`tot_${si}`);const grEl=document.getElementById(`gr_${si}`);
   if(caEl)caEl.textContent=caValid?String(caTotal):'—';
   const exV=exInp?.value.trim()??'';const exam=Number(exV);
-  if(exV!==''&&!isNaN(exam)&&exam>=0&&exam<=70){exInp?.classList.remove('invalid');if(caValid){const tot=caTotal+exam,gr=getGrade(tot);if(totEl)totEl.textContent=String(tot);if(grEl){grEl.textContent=gr.g;grEl.className=`grade-pill ${gr.cls}`;}}else{if(totEl)totEl.textContent='—';if(grEl){grEl.textContent='—';grEl.className='grade-pill';}}}
+  if(exV!==''&&!isNaN(exam)&&exam>=0&&exam<=60){exInp?.classList.remove('invalid');if(caValid){const tot=caTotal+exam,gr=getGrade(tot);if(totEl)totEl.textContent=String(tot);if(grEl){grEl.textContent=gr.g;grEl.className=`grade-pill ${gr.cls}`;}}else{if(totEl)totEl.textContent='—';if(grEl){grEl.textContent='—';grEl.className='grade-pill';}}}
   else{if(exV&&exV!=='')exInp?.classList.add('invalid');else exInp?.classList.remove('invalid');if(totEl)totEl.textContent='—';if(grEl){grEl.textContent='—';grEl.className='grade-pill';}}
   updateModalSummary(getSubjects(selClass).length);
 };
@@ -673,7 +673,7 @@ $('save-btn').addEventListener('click',async()=>{
     // Exam field empty while other data exists → validation error
     if(exV===''){exInp?.classList.add('invalid');anyError=true;return;}
     const exam=Number(exV);
-    if(isNaN(exam)||exam<0||exam>70){exInp?.classList.add('invalid');anyError=true;return;}
+    if(isNaN(exam)||exam<0||exam>60){exInp?.classList.add('invalid');anyError=true;return;}
     exInp?.classList.remove('invalid');
     if(!caComplete){anyError=true;return;}
 
